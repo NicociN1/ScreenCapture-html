@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         video.width = 768;
         video.height = 432;
         video.autoplay = true;
+        video.muted = true;
 
         const downloadAnchor = document.createElement('a');
         downloadAnchor.className = 'download-anchor';
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const file = new File([blob], 'recorded-video.mp4', { type: 'video/mp4' });
             const url = URL.createObjectURL(file);
             video.src = url;
+            video.muted = false;
             downloadAnchor.href = url;
             downloadAnchor.download = file.name;
             downloadAnchor.textContent = 'ダウンロード';
