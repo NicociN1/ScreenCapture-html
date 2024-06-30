@@ -2,4 +2,45 @@ button#capture_button {
     font-size: x-large;
     margin: 16px;
     background-color: #333;
-  
+    border-radius: 50px;
+    color: #fff;
+    padding: 15px 60px;
+    border: solid 4px #222;
+    transition: background-color 0.3s ease;
+}
+
+button#capture_button:hover {
+    background-color: #222;
+}
+
+div#videos {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    div.video-item {
+        display: inline-block;
+        margin: 8px;
+
+        * {
+            display: block;
+        }
+
+        video {
+            border-radius: 5px;
+            transition: border-color 1s ease;
+        }
+
+        video:not([src]) {
+            border: solid 5px #ff0000;
+        }
+
+        video[src] {
+            border: solid 5px #000;
+        }
+    }
+}
+
+div.center-items {
+    text-align: center;
+}
