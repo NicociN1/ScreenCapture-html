@@ -1,0 +1,1 @@
+setTimeout(() => location.href = './screen_capture/screen_capture.html', 200);
