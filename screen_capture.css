@@ -7,6 +7,7 @@ button#capture_button {
     padding: 15px 60px;
     border: solid 4px #222;
     transition: background-color 0.3s ease;
+    align-items: end
 }
 
 button#capture_button:hover {
@@ -22,25 +23,39 @@ div#videos {
         display: inline-block;
         margin: 8px;
 
-        * {
-            display: block;
-        }
-
         video {
             border-radius: 5px;
             transition: border-color 1s ease;
         }
 
         video:not([src]) {
-            border: solid 5px #ff0000;
+            border: solid 6px #ff0000;
         }
 
         video[src] {
-            border: solid 5px #000;
+            border: solid 6px #000;
         }
     }
 }
 
 div.center-items {
     text-align: center;
+}
+
+div.control-item {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+a.download-anchor {
+    font-size: large;
+    margin: auto;
+}
+
+button.stop-button {
+    font-size: large;
+    margin: 0;
+    position: absolute;
+    right: 0;
 }

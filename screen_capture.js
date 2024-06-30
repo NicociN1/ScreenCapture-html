@@ -14,8 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         mediaRecorder.start()
 
-        const div = document.createElement('div');
-        div.className = 'video-item';
+        const videoDiv = document.createElement('div');
+        videoDiv.className = 'video-item';
+        const controlDiv = document.createElement('div');
+        controlDiv.className = 'control-item';
 
         const video = document.createElement('video');
         video.srcObject = mediaStream;
@@ -26,13 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const downloadAnchor = document.createElement('a');
         downloadAnchor.className = 'download-anchor';
-        downloadAnchor.textContent = '録画中...'
+        downloadAnchor.textContent = '録画中'
 
-        div.appendChild(video);
-        div.appendChild(downloadAnchor);
-        videos.appendChild(div);
+        const stopButton = document.createElement('button');
+        stopButton.textContent = '停止'
+        stopButton.className = 'stop-button'
+        stopButton.addEventListener('click', () => mediaRecorder.stop());
+
+        videoDiv.appendChild(video);
+        videoDiv.appendChild(controlDiv);
+        controlDiv.appendChild(downloadAnchor);
+        controlDiv.appendChild(stopButton)
+        videos.appendChild(videoDiv);
 
         mediaRecorder.onstop = function () {
+            mediaStream.getTracks().forEach(x => x.stop());
             video.srcObject = null;
             const blob = new Blob(recordedChunks, { type: 'video/mp4' });
             const file = new File([blob], 'recorded-video.mp4', { type: 'video/mp4' });
@@ -41,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadAnchor.href = url;
             downloadAnchor.download = file.name;
             downloadAnchor.textContent = 'ダウンロード';
+            stopButton.disabled = true;
         }
     })
 })
