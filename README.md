@@ -14,4 +14,4 @@ await capture.stop();
 ```
 
 ## GitHub Pages
-https://nicocin1.github.io/ScreenCapture-html/
+https://nicocin1.github.io/screen_capture_in_web/
