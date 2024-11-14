@@ -38,16 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
         controlDiv.appendChild(stopButton)
         videos.appendChild(videoDiv);
 
-        capture.mediaRecorder.onstop = function () {
-            capture.mediaStream.getTracks().forEach(x => x.stop());
-            video.srcObject = null;
-            const blob = new Blob(capture.recordedChunks, { type: 'video/mp4' });
-            const file = new File([blob], 'recorded-video.mp4', { type: 'video/mp4' });
-            const url = URL.createObjectURL(file);
+        capture.mediaRecorder.onstop = async function () {
+            const url = await capture.toUrl()
             video.src = url;
             video.muted = false;
             downloadAnchor.href = url;
-            downloadAnchor.download = file.name;
+            downloadAnchor.download = 'video.mp4';
             downloadAnchor.textContent = 'ダウンロード';
             stopButton.disabled = true;
         }

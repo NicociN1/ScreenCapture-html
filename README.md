@@ -11,6 +11,9 @@ await capture.start();
 
 //Capture Stop
 await capture.stop();
+
+//Capture to Url
+const url = await capture.toUrl();
 ```
 
 ## GitHub Pages

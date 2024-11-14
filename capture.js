@@ -3,7 +3,14 @@ export class Capture {
      * @type {MediaStream}
      */
     mediaStream = null
+    /**
+     * @type {MediaRecorder}
+     */
     mediaRecorder = null
+    /**
+     * @type {Blob[]}
+     */
+    recordedChunks = []
 
     constructor() { }
 
@@ -11,10 +18,10 @@ export class Capture {
     async start() {
         this.mediaStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
         this.mediaRecorder = new MediaRecorder(this.mediaStream, { mimeType: 'video/mp4' })
-        const recordedChunks = []
-        this.mediaRecorder.ondataavailable = function (event) {
+        this.recordedChunks = []
+        this.mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0) {
-                recordedChunks.push(event.data);
+                this.recordedChunks.push(event.data);
             }
         }
 
@@ -24,5 +31,13 @@ export class Capture {
     //Capture Stop
     async stop() {
         this.mediaRecorder.stop()
+    }
+
+    async toUrl() {
+        this.mediaStream.getTracks().forEach(x => x.stop());
+        const blob = new Blob(this.recordedChunks, { type: 'video/mp4' });
+        const file = new File([blob], 'video.mp4', { type: 'video/mp4' });
+        const url = URL.createObjectURL(file);
+        return url;
     }
 }
